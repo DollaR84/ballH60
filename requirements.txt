@@ -1,0 +1,10 @@
+aiogram
+aiogram-dialog
+SQLAlchemy
+aiosqlite
+alembic
+redis
+aioredis
+aiofiles
+dishka
+/mnt/d/projects/barsik/
