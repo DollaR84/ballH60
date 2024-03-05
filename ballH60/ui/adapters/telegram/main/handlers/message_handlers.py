@@ -7,7 +7,7 @@ from barsik.aiogram.functions import get_user
 
 from db import DB
 
-from dishka.integrations.aiogram import Depends, inject
+from dishka.integrations.aiogram import FromDishka, inject
 
 from models import User
 
@@ -20,8 +20,8 @@ class MessageHandlers:
     @inject
     async def message_handler(
             cls, message: types.Message,
-            db: Annotated[DB, Depends()],
-            ballH60: Annotated[BallH60Client, Depends()],
+            db: Annotated[DB, FromDishka()],
+            ballH60: Annotated[BallH60Client, FromDishka()],
     ):
         user = User.from_schema(get_user(message))
         user = await db.get_user(user)

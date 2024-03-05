@@ -8,7 +8,7 @@ from barsik.localisation import Localisation
 
 from db import DB
 
-from dishka.integrations.aiogram import Depends, inject
+from dishka.integrations.aiogram import FromDishka, inject
 
 from models import User
 
@@ -23,9 +23,9 @@ class CommandHandlers:
     @inject
     async def start_handler(
             cls, message: types.Message,
-            db: Annotated[DB, Depends()],
-            local: Annotated[Localisation, Depends()],
-            ballH60: Annotated[BallH60Client, Depends()],
+            db: Annotated[DB, FromDishka()],
+            local: Annotated[Localisation, FromDishka()],
+            ballH60: Annotated[BallH60Client, FromDishka()],
     ):
         user = User.from_schema(get_user(message))
         user = await db.get_and_update_user(user)

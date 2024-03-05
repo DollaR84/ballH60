@@ -10,7 +10,7 @@ from barsik.aiogram.dialog.widgets.text import FormatLocalisation
 
 from db import DB
 
-from dishka.integrations.aiogram import Depends, inject
+from dishka.integrations.aiogram import FromDishka, inject
 
 from models import User
 
@@ -24,7 +24,7 @@ class AboutDialog:
     async def about_handler(
             cls, message: types.Message,
             dialog_manager: DialogManager,
-            db: Annotated[DB, Depends()],
+            db: Annotated[DB, FromDishka()],
     ):
         user = User.from_schema(get_user(message))
         user = await db.get_and_update_user(user)

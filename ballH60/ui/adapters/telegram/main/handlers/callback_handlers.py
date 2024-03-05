@@ -7,7 +7,7 @@ from barsik.localisation import Localisation
 
 from db import DB
 
-from dishka.integrations.aiogram import Depends, inject
+from dishka.integrations.aiogram import FromDishka, inject
 
 from models import User
 
@@ -25,10 +25,10 @@ class CallbackHandlers:
     async def num_calc_handler(
             cls, callback_query: types.CallbackQuery,
             callback_data: NumCalcCallbackData,
-            bot: Annotated[Bot, Depends()],
-            db: Annotated[DB, Depends()],
-            local: Annotated[Localisation, Depends()],
-            ballH60: Annotated[BallH60Client, Depends()],
+            bot: Annotated[Bot, FromDishka()],
+            db: Annotated[DB, FromDishka()],
+            local: Annotated[Localisation, FromDishka()],
+            ballH60: Annotated[BallH60Client, FromDishka()],
     ):
         user = User.from_schema(get_user(callback_query))
         user = await db.get_user(user)
