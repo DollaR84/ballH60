@@ -1,5 +1,3 @@
-from typing import Annotated
-
 from aiogram import F, types
 from aiogram import Router
 
@@ -7,7 +5,7 @@ from barsik.aiogram.functions import get_user
 
 from db import DB
 
-from dishka.integrations.aiogram import FromDishka, inject
+from dishka.integrations.aiogram import FromDishka
 
 from models import User
 
@@ -17,11 +15,10 @@ from services import BallH60Client
 class MessageHandlers:
 
     @classmethod
-    @inject
     async def message_handler(
             cls, message: types.Message,
-            db: Annotated[DB, FromDishka()],
-            ballH60: Annotated[BallH60Client, FromDishka()],
+            db: FromDishka[DB],
+            ballH60: FromDishka[BallH60Client],
     ):
         user = User.from_schema(get_user(message))
         user = await db.get_user(user)

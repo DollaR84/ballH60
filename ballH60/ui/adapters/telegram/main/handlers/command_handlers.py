@@ -1,5 +1,3 @@
-from typing import Annotated
-
 from aiogram import Router, types
 from aiogram.filters.command import CommandStart
 
@@ -8,7 +6,7 @@ from barsik.localisation import Localisation
 
 from db import DB
 
-from dishka.integrations.aiogram import FromDishka, inject
+from dishka.integrations.aiogram import FromDishka
 
 from models import User
 
@@ -20,12 +18,11 @@ from ..keyboards import get_settings_keyboard
 class CommandHandlers:
 
     @classmethod
-    @inject
     async def start_handler(
             cls, message: types.Message,
-            db: Annotated[DB, FromDishka()],
-            local: Annotated[Localisation, FromDishka()],
-            ballH60: Annotated[BallH60Client, FromDishka()],
+            db: FromDishka[DB],
+            local: FromDishka[Localisation],
+            ballH60: FromDishka[BallH60Client],
     ):
         user = User.from_schema(get_user(message))
         user = await db.get_and_update_user(user)

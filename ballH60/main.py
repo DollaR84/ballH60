@@ -16,7 +16,7 @@ async def main():
     service = ServiceProvider(config.config, main.db)
 
     container = make_async_container(config, core, bot, main, service)
-    setup_dishka(container=container, router=bot.dp)
+    setup_dishka(container=container, router=bot.dp, auto_inject=True)
 
     await service.init(core.localisation)
     try:

@@ -1,5 +1,3 @@
-from typing import Annotated
-
 from aiogram import Bot, Router, types
 
 from barsik.aiogram.functions import get_user
@@ -7,7 +5,7 @@ from barsik.localisation import Localisation
 
 from db import DB
 
-from dishka.integrations.aiogram import FromDishka, inject
+from dishka.integrations.aiogram import FromDishka
 
 from models import User
 
@@ -21,14 +19,13 @@ from ..keyboards import get_settings_keyboard
 class CallbackHandlers:
 
     @classmethod
-    @inject
     async def num_calc_handler(
             cls, callback_query: types.CallbackQuery,
             callback_data: NumCalcCallbackData,
-            bot: Annotated[Bot, FromDishka()],
-            db: Annotated[DB, FromDishka()],
-            local: Annotated[Localisation, FromDishka()],
-            ballH60: Annotated[BallH60Client, FromDishka()],
+            bot: FromDishka[Bot],
+            db: FromDishka[DB],
+            local: FromDishka[Localisation],
+            ballH60: FromDishka[BallH60Client],
     ):
         user = User.from_schema(get_user(callback_query))
         user = await db.get_user(user)
